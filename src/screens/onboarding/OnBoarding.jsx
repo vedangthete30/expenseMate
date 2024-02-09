@@ -2,6 +2,7 @@ import { View, Text, FlatList, StyleSheet, Animated } from 'react-native'
 import React, { useState, useRef } from 'react'
 import slides from '../../../slides'
 import OnBoardingItem from '../../components/OnBoardingItem'
+import Paginator from '../../components/Paginator'
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
@@ -9,6 +10,7 @@ const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 const OnBoarding = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const scrollX = useRef(new Animated.Value(0)).current;
+    console.log(scrollX);
     const slidesRef = useRef(null)
 
     const viewableItemsChanged = useRef(({ viewableItems }) => {
@@ -23,7 +25,7 @@ const OnBoarding = () => {
                 <AnimatedFlatList
                     data={slides} renderItem={({ item }) => <OnBoardingItem item={item} />}
                     horizontal
-                    showsHorizontalScrollIndicator
+                    showsHorizontalScrollIndicator={false}
                     pagingEnabled
                     bounces={false}
                     keyExtractor={(item) => item.id}
@@ -38,6 +40,8 @@ const OnBoarding = () => {
                     ref={slidesRef}
                 />
             </View>
+
+            <Paginator data={slides} scrollX={scrollX} />
         </View>
     )
 }
